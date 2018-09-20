@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <script type="text/javascript" src="logic.js"></script>
+        <script type="text/javascript" src="display.js"></script>
+        <script type="text/javascript" src="import.js"></script>
+        <script type="text/javascript" src="stecker.js"></script>
+        <link rel="stylesheet" href="style.css">
+        <title>Enigma</title>
+    </head>
+    <body onload="showMecanism(); fillSteckerCanvas();" onresize="showMecanism(); fillSteckerCanvas();">
+        <div id="main">
+            <div id="encode">
+                <h1>Encodage</h1>
+                <textarea rows="4" cols="50" id="message"></textarea>
+                <br />
+                <input type="submit" onclick="encode()" value="Tout encrypter" />
+                <br />
+                <div id="divResult">
+                    Message codé :
+                    <span id="result"></span>
+                </div>
+            </div>
+            <h1 id="optionTitle">Options <span id="hideOptions" onclick="toggle_options();">(masquer)</span></h1>
+            <div id="options">
+                Temps entre le codage de chaque lettre (en seconde)<br />
+                <input type="range" min="0" max="30" value="1.0" step="0.5"id="rngTime" oninput="rngTimeValue.innerHTML=parseFloat(rngTime.value).toFixed(1)">
+                <span id="rngTimeValue">1.0</span>
+                <h2>Stecker</h2>
+                <div id="stecker">
+                    Click & drag pour relier les lettres (permet l'inversion dans la machine).
+                    <canvas id="cnvStecker"></canvas>
+                </div>
+                <h2>Rotors</h2>
+                <div id="rotors">
+                    <div class="rotorChoice">
+                        <select style="visibility:hidden">
+                        </select>
+                        <h2>Position :</h2>
+                    </div>
+                    <div class="rotorChoice">
+                        Premier Rotor :
+                        <select id="firstRotor" onchange="changeRotor(1, firstRotor.value)">
+                            <option value="0" selected>Rotor I</option>
+                            <option value="1">Rotor II</option>
+                            <option value="2">Rotor III</option>
+                            <option value="3">Rotor IV</option>
+                            <option value="4">Rotor V</option>
+                        </select>
+                        <h2 id="rotor1Position">0</h2>
+                    </div>
+
+                    <div class="rotorChoice">
+                        Deuxième Rotor :
+                        <select id="secondRotor" onchange="changeRotor(2, secondRotor.value)"">
+                            <option value="0">Rotor I</option>
+                            <option value="1" selected>Rotor II</option>
+                            <option value="2">Rotor III</option>
+                            <option value="3">Rotor IV</option>
+                            <option value="4">Rotor V</option>
+                        </select>
+                        <h2 id="rotor2Position">0</h2>
+                    </div>
+
+                    <div class="rotorChoice" onchange="changeRotor(3, thirdRotor.value)">
+                        Troisième Rotor :
+                        <select id="thirdRotor">
+                            <option value="0">Rotor I</option>
+                            <option value="1">Rotor II</option>
+                            <option value="2" selected>Rotor III</option>
+                            <option value="3">Rotor IV</option>
+                            <option value="4">Rotor V</option>
+                        </select>
+                        <h2 id="rotor3Position">0</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="machine">
+            <input type="button" id="rotor1Inc" value="+" onclick="elements[1].rotate()" />
+            <input type="button" id="rotor2Inc" value="+" onclick="elements[2].rotate()" />
+            <input type="button" id="rotor3Inc" value="+" onclick="elements[3].rotate()" />
+            <canvas id="cnv" ></canvas>
+            <input type="button" id="rotor1Sub" value="-" onclick="elements[1].rotate(false)" />
+            <input type="button" id="rotor2Sub" value="-" onclick="elements[2].rotate(false)" />
+            <input type="button" id="rotor3Sub" value="-" onclick="elements[3].rotate(false)" />
+        </div>
+
+    </body>
+</html>
